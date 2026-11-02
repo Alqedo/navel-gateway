@@ -1,0 +1,118 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Your stoves",
+        "description": "Which stoves would you like to connect locally? One gateway connects all selected stoves.",
+        "data": {
+          "devices": "Choose stoves"
+        }
+      },
+      "address": {
+        "title": "Stove address",
+        "description": "**{stove_name}** · Stove {position} of {total}\n\nFind the IP address in your router’s device list. Reserve it there for this stove.",
+        "data": {
+          "stove_ip": "IP address",
+          "device_mac": "Wi-Fi MAC address"
+        }
+      },
+      "network": {
+        "title": "Almost there",
+        "description": "Redirect your stoves' vendor hostnames, for example remote.mcz.it, to the Home Assistant LAN IP in your router or DNS service. Keep any existing redirect.\n\nNext, choose **Local Wi-Fi** in Agua IOT. It is accepted only after every stove returns a live reading.\n\nThe gateway does not change your router or turn on a stove.\n\nEEPROM protection is enabled automatically: at most 15 writes per hour and 50 per day. Choose **Configure → Write protection per stove** to lower the limits or block changes entirely."
+      }
+    },
+    "error": {
+      "invalid_ip": "Enter a private LAN IPv4 address for the stove.",
+      "unknown_stove": "Choose a stove from Agua IOT.",
+      "port_in_use": "Port 1883 is already in use. Stop the conflicting service yourself, or use the existing broker through Home Assistant MQTT. No service has been changed.",
+      "too_many_stoves": "Select up to 16 stoves.",
+      "invalid_mac": "Enter a unique 12-digit Wi-Fi MAC address from your router."
+    },
+    "abort": {
+      "single_gateway": "Your gateway is already set up. Choose Configure to add more stoves.",
+      "setup_aguaiot_first": "Set up Agua IOT first and wait for its first successful reading, then return here. Update Agua IOT if no stove is listed.",
+      "already_configured": "Navel Gateway is already configured.",
+      "update_aguaiot": "Update Agua IOT to a build with Navel Gateway support and restart Home Assistant first."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Stove address",
+        "description": "**{stove_name}** · Stove {position} of {total}\n\nFind the IP address in your router’s device list. Reserve it there for this stove.",
+        "data": {
+          "stove_ip": "IP address",
+          "device_mac": "Wi-Fi MAC address"
+        }
+      },
+      "network": {
+        "title": "Almost there",
+        "description": "Redirect your stoves' vendor hostnames, for example remote.mcz.it, to the Home Assistant LAN IP in your router or DNS service. Keep any existing redirect.\n\nNext, choose **Local Wi-Fi** in Agua IOT. It is accepted only after every stove returns a live reading.\n\nThe gateway does not change your router or turn on a stove.\n\nEEPROM protection is enabled automatically: at most 15 writes per hour and 50 per day. Choose **Configure → Write protection per stove** to lower the limits or block changes entirely."
+      },
+      "stoves": {
+        "title": "Your stoves",
+        "description": "Which stoves would you like to connect locally? One gateway connects all selected stoves.",
+        "data": {
+          "devices": "Choose stoves"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Write protection per stove",
+          "stoves": "Stoves and IP addresses"
+        }
+      },
+      "protection": {
+        "title": "Choose a stove",
+        "description": "Which stove would you like to change write protection for?",
+        "data": {
+          "device": "Stove"
+        }
+      },
+      "safety": {
+        "title": "Write protection",
+        "description": "**{stove_name}**\n\nPermanently stored settings, such as schedules or setpoints, use EEPROM memory. Frequent writes can wear it out. Reading and RAM controls remain available.\n\nRecommended: at most 15 writes in 60 minutes and 50 in 24 hours. Counts survive restarts.",
+        "data": {
+          "allow_eeprom_writes": "Allow changes to stored settings",
+          "max_eeprom_writes_per_hour": "Maximum in 60 minutes",
+          "max_eeprom_writes_per_day": "Maximum in 24 hours"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Off: EEPROM changes are blocked for this stove."
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Enter a private LAN IPv4 address for the stove.",
+      "unknown_stove": "Choose a stove from Agua IOT.",
+      "port_in_use": "Port 1883 is already in use. Stop the conflicting service yourself, or use the existing broker through Home Assistant MQTT. No service has been changed.",
+      "too_many_stoves": "Select up to 16 stoves.",
+      "invalid_limits": "Use whole numbers: 1–15 per hour and 1–50 per day. The daily limit must be at least the hourly limit.",
+      "invalid_mac": "Enter a unique 12-digit Wi-Fi MAC address from your router."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Set up Agua IOT first and wait for its first successful reading, then return here. Update Agua IOT if no stove is listed."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Stove connection"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "EEPROM write protection",
+        "state": {
+          "ready": "Protected",
+          "disabled": "Writes blocked",
+          "hourly_limit": "Hourly limit reached",
+          "daily_limit": "Daily limit reached",
+          "storage_error": "Storage error"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Deine Öfen",
+        "description": "Welche Öfen möchtest du lokal verbinden? Ein Gateway verbindet alle ausgewählten Öfen.",
+        "data": {
+          "devices": "Öfen auswählen"
+        }
+      },
+      "address": {
+        "title": "Adresse des Ofens",
+        "description": "**{stove_name}** · Ofen {position} von {total}\n\nDie IP-Adresse findest du in der Geräteliste deines Routers. Reserviere sie dort für diesen Ofen.",
+        "data": {
+          "stove_ip": "IP-Adresse",
+          "device_mac": "WLAN-MAC-Adresse"
+        }
+      },
+      "network": {
+        "title": "Fast fertig",
+        "description": "Leite die Hersteller-Hostnamen deiner Öfen im Router oder DNS-Dienst auf die LAN-IP von Home Assistant um, zum Beispiel remote.mcz.it. Eine vorhandene Umleitung bleibt bestehen.\n\nWähle danach in Agua IOT die Verbindung **Lokales WLAN**. Sie wird erst übernommen, wenn jeder Ofen einen aktuellen Messwert liefert.\n\nDas Gateway verändert deinen Router nicht und schaltet keinen Ofen ein.\n\nDer EEPROM-Schreibschutz ist automatisch aktiv: maximal 15 Schreibvorgänge pro Stunde und 50 pro Tag. Unter **Konfigurieren → Schreibschutz pro Ofen** kannst du die Grenzen senken oder Änderungen ganz sperren."
+      }
+    },
+    "error": {
+      "invalid_ip": "Trage die private IPv4-Adresse des Ofens im Heimnetz ein.",
+      "unknown_stove": "Wähle einen Ofen aus Agua IOT.",
+      "port_in_use": "Port 1883 ist bereits belegt. Beende den betreffenden Dienst selbst oder verwende den vorhandenen Broker über Home Assistant MQTT. Es wurde kein Dienst verändert.",
+      "too_many_stoves": "Wähle höchstens 16 Öfen aus.",
+      "invalid_mac": "Trage die eindeutige WLAN-MAC-Adresse aus deinem Router ein, 12 Hexadezimalstellen."
+    },
+    "abort": {
+      "single_gateway": "Dein Gateway ist bereits eingerichtet. Über Konfigurieren kannst du weitere Öfen hinzufügen.",
+      "setup_aguaiot_first": "Richte zuerst Agua IOT ein und warte auf die ersten aktuellen Messwerte. Kehre danach hierher zurück. Aktualisiere Agua IOT, wenn die Ofenauswahl leer bleibt.",
+      "already_configured": "Navel Gateway ist bereits eingerichtet.",
+      "update_aguaiot": "Aktualisiere zuerst Agua IOT auf eine Version mit Navel-Gateway-Unterstützung und starte Home Assistant neu."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Adresse des Ofens",
+        "description": "**{stove_name}** · Ofen {position} von {total}\n\nDie IP-Adresse findest du in der Geräteliste deines Routers. Reserviere sie dort für diesen Ofen.",
+        "data": {
+          "stove_ip": "IP-Adresse",
+          "device_mac": "WLAN-MAC-Adresse"
+        }
+      },
+      "network": {
+        "title": "Fast fertig",
+        "description": "Leite die Hersteller-Hostnamen deiner Öfen im Router oder DNS-Dienst auf die LAN-IP von Home Assistant um, zum Beispiel remote.mcz.it. Eine vorhandene Umleitung bleibt bestehen.\n\nWähle danach in Agua IOT die Verbindung **Lokales WLAN**. Sie wird erst übernommen, wenn jeder Ofen einen aktuellen Messwert liefert.\n\nDas Gateway verändert deinen Router nicht und schaltet keinen Ofen ein.\n\nDer EEPROM-Schreibschutz ist automatisch aktiv: maximal 15 Schreibvorgänge pro Stunde und 50 pro Tag. Unter **Konfigurieren → Schreibschutz pro Ofen** kannst du die Grenzen senken oder Änderungen ganz sperren."
+      },
+      "stoves": {
+        "title": "Deine Öfen",
+        "description": "Welche Öfen möchtest du lokal verbinden? Ein Gateway verbindet alle ausgewählten Öfen.",
+        "data": {
+          "devices": "Öfen auswählen"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Schreibschutz pro Ofen",
+          "stoves": "Öfen und IP-Adressen"
+        }
+      },
+      "protection": {
+        "title": "Ofen auswählen",
+        "description": "Für welchen Ofen möchtest du den Schreibschutz ändern?",
+        "data": {
+          "device": "Ofen"
+        }
+      },
+      "safety": {
+        "title": "Schreibschutz",
+        "description": "**{stove_name}**\n\nDauerhaft gespeicherte Einstellungen, etwa Zeitprogramme oder Sollwerte, nutzen den EEPROM-Speicher. Häufiges Schreiben kann ihn verschleißen. Lesen und RAM-Steuerung bleiben möglich.\n\nEmpfohlen: höchstens 15 Schreibvorgänge in 60 Minuten und 50 in 24 Stunden. Die Zähler bleiben nach einem Neustart erhalten.",
+        "data": {
+          "allow_eeprom_writes": "Gespeicherte Einstellungen ändern",
+          "max_eeprom_writes_per_hour": "Maximal in 60 Minuten",
+          "max_eeprom_writes_per_day": "Maximal in 24 Stunden"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Aus: Änderungen im EEPROM werden für diesen Ofen gesperrt."
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Trage die private IPv4-Adresse des Ofens im Heimnetz ein.",
+      "unknown_stove": "Wähle einen Ofen aus Agua IOT.",
+      "port_in_use": "Port 1883 ist bereits belegt. Beende den betreffenden Dienst selbst oder verwende den vorhandenen Broker über Home Assistant MQTT. Es wurde kein Dienst verändert.",
+      "too_many_stoves": "Wähle höchstens 16 Öfen aus.",
+      "invalid_limits": "Ganze Zahlen verwenden: 1–15 pro Stunde und 1–50 pro Tag. Das Tageslimit muss mindestens so hoch wie das Stundenlimit sein.",
+      "invalid_mac": "Trage die eindeutige WLAN-MAC-Adresse aus deinem Router ein, 12 Hexadezimalstellen."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Richte zuerst Agua IOT ein und warte auf die ersten aktuellen Messwerte. Kehre danach hierher zurück. Aktualisiere Agua IOT, wenn die Ofenauswahl leer bleibt."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Ofenverbindung"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "EEPROM-Schreibschutz",
+        "state": {
+          "ready": "Geschützt",
+          "disabled": "Schreiben gesperrt",
+          "hourly_limit": "Stundenlimit erreicht",
+          "daily_limit": "Tageslimit erreicht",
+          "storage_error": "Speicherfehler"
+        }
+      }
+    }
+  }
+}

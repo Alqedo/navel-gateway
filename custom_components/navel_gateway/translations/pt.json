@@ -1,0 +1,118 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "As suas salamandras",
+        "description": "Escolha as salamandras a ligar localmente. Um único gateway liga todas as salamandras selecionadas.",
+        "data": {
+          "devices": "Escolher salamandras"
+        }
+      },
+      "address": {
+        "title": "Endereço da salamandra",
+        "description": "**{stove_name}** · Salamandra {position} de {total}\n\nEncontre o endereço IP na lista de dispositivos do router e reserve-o para esta salamandra.",
+        "data": {
+          "stove_ip": "Endereço IP",
+          "device_mac": "Endereço MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Concluir configuração",
+        "description": "No router ou serviço DNS, redirecione o nome do servidor do fabricante, por exemplo remote.mcz.it, para o IP local do Home Assistant. Mantenha um redirecionamento existente se estiver correto.\n\nDepois, escolha **Wi-Fi local** no Agua IOT. Cada salamandra tem de devolver uma leitura atual.\n\nA proteção EEPROM permite no máximo 15 escritas por hora e 50 por dia. Em **Configurar → Proteção por salamandra**, pode reduzir os limites ou bloquear a escrita."
+      }
+    },
+    "error": {
+      "invalid_ip": "Introduza um endereço IPv4 privado da salamandra.",
+      "unknown_stove": "Escolha uma salamandra do Agua IOT.",
+      "port_in_use": "A porta 1883 já está ocupada. Liberte a porta ou utilize o servidor existente através da integração MQTT. Nenhum serviço foi alterado.",
+      "too_many_stoves": "Selecione no máximo 16 salamandras.",
+      "invalid_mac": "Introduza o endereço MAC Wi-Fi único de 12 caracteres hexadecimais indicado no router."
+    },
+    "abort": {
+      "single_gateway": "O gateway já está configurado. Escolha Configurar para adicionar salamandras.",
+      "setup_aguaiot_first": "Configure primeiro o Agua IOT e aguarde uma leitura atual. Depois, volte aqui.",
+      "already_configured": "O Navel Gateway já está configurado.",
+      "update_aguaiot": "Atualize o Agua IOT para uma versão compatível com o Navel Gateway e reinicie o Home Assistant."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Endereço da salamandra",
+        "description": "**{stove_name}** · Salamandra {position} de {total}\n\nEncontre o endereço IP na lista de dispositivos do router e reserve-o para esta salamandra.",
+        "data": {
+          "stove_ip": "Endereço IP",
+          "device_mac": "Endereço MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Concluir configuração",
+        "description": "No router ou serviço DNS, redirecione o nome do servidor do fabricante, por exemplo remote.mcz.it, para o IP local do Home Assistant. Mantenha um redirecionamento existente se estiver correto.\n\nDepois, escolha **Wi-Fi local** no Agua IOT. Cada salamandra tem de devolver uma leitura atual.\n\nA proteção EEPROM permite no máximo 15 escritas por hora e 50 por dia. Em **Configurar → Proteção por salamandra**, pode reduzir os limites ou bloquear a escrita."
+      },
+      "stoves": {
+        "title": "As suas salamandras",
+        "description": "Escolha as salamandras a ligar localmente. Um único gateway liga todas as salamandras selecionadas.",
+        "data": {
+          "devices": "Escolher salamandras"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Proteção por salamandra",
+          "stoves": "Salamandras e endereços IP"
+        }
+      },
+      "protection": {
+        "title": "Escolher salamandra",
+        "description": "Para que salamandra pretende alterar a proteção?",
+        "data": {
+          "device": "Salamandra"
+        }
+      },
+      "safety": {
+        "title": "Proteção contra escrita",
+        "description": "**{stove_name}**\n\nAs definições permanentes, como programas horários ou temperaturas pretendidas, utilizam EEPROM. Escritas frequentes podem causar desgaste. A leitura e o controlo em RAM continuam disponíveis.\n\nRecomendado: no máximo 15 escritas em 60 minutos e 50 em 24 horas. Os contadores são mantidos após reiniciar.",
+        "data": {
+          "allow_eeprom_writes": "Permitir alterações às definições guardadas",
+          "max_eeprom_writes_per_hour": "Máximo em 60 minutos",
+          "max_eeprom_writes_per_day": "Máximo em 24 horas"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Desativado: as alterações à EEPROM ficam bloqueadas nesta salamandra."
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Introduza um endereço IPv4 privado da salamandra.",
+      "unknown_stove": "Escolha uma salamandra do Agua IOT.",
+      "port_in_use": "A porta 1883 já está ocupada. Liberte a porta ou utilize o servidor existente através da integração MQTT. Nenhum serviço foi alterado.",
+      "too_many_stoves": "Selecione no máximo 16 salamandras.",
+      "invalid_limits": "Utilize números inteiros: 1–15 por hora e 1–50 por dia. O limite diário deve ser igual ou superior ao limite horário.",
+      "invalid_mac": "Introduza o endereço MAC Wi-Fi único de 12 caracteres hexadecimais indicado no router."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Configure primeiro o Agua IOT e aguarde uma leitura atual. Depois, volte aqui."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Ligação da salamandra"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "Proteção EEPROM",
+        "state": {
+          "ready": "Protegido",
+          "disabled": "Escrita bloqueada",
+          "hourly_limit": "Limite horário atingido",
+          "daily_limit": "Limite diário atingido",
+          "storage_error": "Erro de armazenamento"
+        }
+      }
+    }
+  }
+}

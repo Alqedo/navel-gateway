@@ -1,0 +1,118 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vos poêles",
+        "description": "Choisissez les poêles à connecter localement. Une seule passerelle peut tous les connecter.",
+        "data": {
+          "devices": "Choisir les poêles"
+        }
+      },
+      "address": {
+        "title": "Adresse du poêle",
+        "description": "**{stove_name}** · Poêle {position} sur {total}\n\nRetrouvez l’adresse IP dans la liste des appareils du routeur et réservez-la pour ce poêle.",
+        "data": {
+          "stove_ip": "Adresse IP",
+          "device_mac": "Adresse MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Terminer la configuration",
+        "description": "Dans votre routeur ou service DNS, redirigez le nom du serveur du fabricant, par exemple remote.mcz.it, vers l’adresse IP locale de Home Assistant. Conservez une redirection déjà correcte.\n\nChoisissez ensuite **Wi-Fi local** dans Agua IOT. Chaque poêle doit renvoyer une mesure actuelle.\n\nLa protection EEPROM limite les écritures à 15 par heure et 50 par jour. Sous **Configurer → Protection par poêle**, vous pouvez réduire ces limites ou bloquer les écritures."
+      }
+    },
+    "error": {
+      "invalid_ip": "Saisissez une adresse IPv4 privée du réseau local.",
+      "unknown_stove": "Choisissez un poêle disponible dans Agua IOT.",
+      "port_in_use": "Le port 1883 est déjà utilisé. Libérez ce port ou utilisez le serveur existant via l’intégration MQTT. Aucun service n’a été modifié.",
+      "too_many_stoves": "Choisissez au maximum 16 poêles.",
+      "invalid_mac": "Saisissez une adresse MAC Wi-Fi unique de 12 caractères hexadécimaux indiquée dans votre routeur."
+    },
+    "abort": {
+      "single_gateway": "La passerelle existe déjà. Utilisez Configurer pour ajouter des poêles.",
+      "setup_aguaiot_first": "Configurez d’abord Agua IOT et attendez une mesure actuelle. Revenez ensuite ici.",
+      "already_configured": "Navel Gateway est déjà configuré.",
+      "update_aguaiot": "Mettez à jour Agua IOT vers une version compatible avec Navel Gateway et redémarrez Home Assistant."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Adresse du poêle",
+        "description": "**{stove_name}** · Poêle {position} sur {total}\n\nRetrouvez l’adresse IP dans la liste des appareils du routeur et réservez-la pour ce poêle.",
+        "data": {
+          "stove_ip": "Adresse IP",
+          "device_mac": "Adresse MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Terminer la configuration",
+        "description": "Dans votre routeur ou service DNS, redirigez le nom du serveur du fabricant, par exemple remote.mcz.it, vers l’adresse IP locale de Home Assistant. Conservez une redirection déjà correcte.\n\nChoisissez ensuite **Wi-Fi local** dans Agua IOT. Chaque poêle doit renvoyer une mesure actuelle.\n\nLa protection EEPROM limite les écritures à 15 par heure et 50 par jour. Sous **Configurer → Protection par poêle**, vous pouvez réduire ces limites ou bloquer les écritures."
+      },
+      "stoves": {
+        "title": "Vos poêles",
+        "description": "Choisissez les poêles à connecter localement. Une seule passerelle peut tous les connecter.",
+        "data": {
+          "devices": "Choisir les poêles"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Protection par poêle",
+          "stoves": "Poêles et adresses IP"
+        }
+      },
+      "protection": {
+        "title": "Choisir un poêle",
+        "description": "Pour quel poêle souhaitez-vous modifier la protection ?",
+        "data": {
+          "device": "Poêle"
+        }
+      },
+      "safety": {
+        "title": "Protection contre les écritures",
+        "description": "**{stove_name}**\n\nLes réglages permanents, comme les programmes ou les consignes, utilisent l’EEPROM. Des écritures fréquentes peuvent l’user. La lecture et les commandes en RAM restent disponibles.\n\nLimites recommandées : 15 écritures en 60 minutes et 50 en 24 heures. Les compteurs sont conservés après un redémarrage.",
+        "data": {
+          "allow_eeprom_writes": "Autoriser les modifications des réglages enregistrés",
+          "max_eeprom_writes_per_hour": "Maximum en 60 minutes",
+          "max_eeprom_writes_per_day": "Maximum en 24 heures"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Désactivé : les modifications EEPROM sont bloquées pour ce poêle."
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Saisissez une adresse IPv4 privée du réseau local.",
+      "unknown_stove": "Choisissez un poêle disponible dans Agua IOT.",
+      "port_in_use": "Le port 1883 est déjà utilisé. Libérez ce port ou utilisez le serveur existant via l’intégration MQTT. Aucun service n’a été modifié.",
+      "too_many_stoves": "Choisissez au maximum 16 poêles.",
+      "invalid_limits": "Utilisez des entiers : 1–15 par heure et 1–50 par jour. La limite journalière doit être au moins égale à la limite horaire.",
+      "invalid_mac": "Saisissez une adresse MAC Wi-Fi unique de 12 caractères hexadécimaux indiquée dans votre routeur."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Configurez d’abord Agua IOT et attendez une mesure actuelle. Revenez ensuite ici."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Connexion du poêle"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "Protection EEPROM",
+        "state": {
+          "ready": "Protégé",
+          "disabled": "Écritures bloquées",
+          "hourly_limit": "Limite horaire atteinte",
+          "daily_limit": "Limite journalière atteinte",
+          "storage_error": "Erreur de stockage"
+        }
+      }
+    }
+  }
+}
