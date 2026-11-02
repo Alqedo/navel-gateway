@@ -360,3 +360,32 @@ async def test_cloud_uuid_stove_can_be_bound_to_wifi_mac(monkeypatch):
     result = await wizard.async_step_network({})
     assert result["data"]["stoves"][0]["device_mac"] == "AABBCCDDEEFF"
     assert result["data"]["stoves"][0]["agua_device_id"] == identity
+
+
+@pytest.mark.asyncio
+async def test_editing_uuid_stove_preserves_binding_and_protection(monkeypatch):
+    identity = "12345678-1234-4234-8234-123456789abc"
+    stove = {
+        "device_mac": "AABBCCDDEEFF",
+        "agua_device_id": identity,
+        "stove_ip": "192.168.1.20",
+        "name": "Stove",
+        "allow_eeprom_writes": False,
+        "max_eeprom_writes_per_hour": 3,
+        "max_eeprom_writes_per_day": 10,
+    }
+    wizard = flow.NavelGatewayOptionsFlow()
+    wizard.hass = MagicMock()
+    entry = MagicMock(data={"stoves": [stove]})
+    monkeypatch.setattr(type(wizard), "config_entry", property(lambda _self: entry))
+    wizard.hass.config_entries.async_entries.return_value = [
+        MagicMock(
+            data={"ble_bootstrap_devices": [{"id_device": identity, "name": "Stove"}]}
+        )
+    ]
+    await wizard.async_step_stoves()
+    assert list(wizard._choices) == ["AABBCCDDEEFF"]
+    await wizard.async_step_stoves({"devices": ["AABBCCDDEEFF"]})
+    await wizard.async_step_address({"stove_ip": "192.168.1.21"})
+    result = await wizard.async_step_network({})
+    assert result["data"]["stoves"] == [{**stove, "stove_ip": "192.168.1.21"}]
