@@ -20,7 +20,10 @@
       },
       "network": {
         "title": "Concluir configuração",
-        "description": "Redirecione o nome do servidor do fabricante para o Home Assistant no DNS, por exemplo remote.mcz.it. O gateway não altera o router. Para scripts próprios, ative o cliente MQTT direto em Configurar. O Agua IOT é opcional e fornece controlos da salamandra. Os limites EEPROM aplicam-se a todos os clientes."
+        "description": "Redirecione o nome do servidor do fabricante para o Home Assistant no DNS, por exemplo remote.mcz.it. O gateway não altera o router. Para scripts próprios, ative o cliente MQTT direto em Configurar. O Agua IOT é opcional e fornece controlos da salamandra. Os limites EEPROM aplicam-se a todos os clientes.\n\n{count} salamandras podem ser ligadas através do Agua IOT instalado. A confirmação guarda uma ligação MQTT local e muda a conta Agua IOT completa correspondente para MQTT local. As outras definições mantêm-se. Sem confirmação, o Agua IOT não é alterado.",
+        "data": {
+          "connect_agua": "Ligar salamandras Agua IOT detetadas"
+        }
       },
       "manual": {
         "title": "Adicionar salamandra manualmente",
@@ -38,7 +41,8 @@
       "too_many_stoves": "Selecione no máximo 16 salamandras.",
       "invalid_mac": "Introduza o endereço MAC Wi-Fi único de 12 caracteres hexadecimais indicado no router.",
       "invalid_name": "Introduza um nome.",
-      "invalid_password": "Utilize uma palavra-passe com pelo menos 16 caracteres."
+      "invalid_password": "Utilize uma palavra-passe com pelo menos 16 caracteres.",
+      "agua_unavailable": "Os dispositivos Agua IOT mudaram ou a configuração MQTT é incompatível. Configure novamente a ligação."
     },
     "abort": {
       "single_gateway": "O gateway já está configurado. Escolha Configurar para adicionar salamandras.",
@@ -60,7 +64,10 @@
       },
       "network": {
         "title": "Concluir configuração",
-        "description": "Redirecione o nome do servidor do fabricante para o Home Assistant no DNS, por exemplo remote.mcz.it. O gateway não altera o router. Para scripts próprios, ative o cliente MQTT direto em Configurar. O Agua IOT é opcional e fornece controlos da salamandra. Os limites EEPROM aplicam-se a todos os clientes."
+        "description": "Redirecione o nome do servidor do fabricante para o Home Assistant no DNS, por exemplo remote.mcz.it. O gateway não altera o router. Para scripts próprios, ative o cliente MQTT direto em Configurar. O Agua IOT é opcional e fornece controlos da salamandra. Os limites EEPROM aplicam-se a todos os clientes.\n\n{count} salamandras podem ser ligadas através do Agua IOT instalado. A confirmação guarda uma ligação MQTT local e muda a conta Agua IOT completa correspondente para MQTT local. As outras definições mantêm-se. Sem confirmação, o Agua IOT não é alterado.",
+        "data": {
+          "connect_agua": "Ligar salamandras Agua IOT detetadas"
+        }
       },
       "stoves": {
         "title": "As suas salamandras",
@@ -130,7 +137,8 @@
       "invalid_limits": "Utilize números inteiros: 1–15 por hora e 1–50 por dia. O limite diário deve ser igual ou superior ao limite horário.",
       "invalid_mac": "Introduza o endereço MAC Wi-Fi único de 12 caracteres hexadecimais indicado no router.",
       "invalid_name": "Introduza um nome.",
-      "invalid_password": "Utilize uma palavra-passe com pelo menos 16 caracteres."
+      "invalid_password": "Utilize uma palavra-passe com pelo menos 16 caracteres.",
+      "agua_unavailable": "Os dispositivos Agua IOT mudaram ou a configuração MQTT é incompatível. Configure novamente a ligação."
     },
     "abort": {
       "setup_aguaiot_first": "Configure primeiro o Agua IOT e aguarde uma leitura atual. Depois, volte aqui.",

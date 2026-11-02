@@ -416,3 +416,30 @@ async def test_direct_mqtt_network_login_and_revocation():
                 pytest.fail("Disabled direct access must not authenticate")
     finally:
         await endpoint.close()
+
+
+@pytest.mark.asyncio
+async def test_late_client_receives_current_handshake_but_not_old_readings(gateway):
+    reader, writer = await stove_connect(gateway)
+    identity = b'{"mt":"C","mi":"startup","pl":{"Cmd":"Identity","Id":"AABBCCDDEEFF","Security":"test-only"}}'
+    for payload in (identity, b'{"mt":"R","pl":{"Cmd":"RequestReading"}}'):
+        writer.write(
+            broker.packet(0x32, broker.mqtt_string(RESPONSE) + b"\x00\x02" + payload)
+        )
+        await writer.drain()
+        assert await broker.read_packet(reader) == (0x40, b"\x00\x02")
+    async with aiomqtt.Client(
+        **gateway.connection_info, identifier="navel-ha-late"
+    ) as client:
+        await client.subscribe(RESPONSE)
+        message = await asyncio.wait_for(anext(client.messages), 2)
+        assert message.payload == identity
+        assert not message.retain
+        with pytest.raises(TimeoutError):
+            await asyncio.wait_for(anext(client.messages), 0.05)
+    writer.write(broker.packet(0xE0, b""))
+    await writer.drain()
+    assert await asyncio.wait_for(reader.read(1), 2) == b""
+    assert not gateway._identities
+    writer.close()
+    await writer.wait_closed()

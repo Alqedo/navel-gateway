@@ -172,6 +172,13 @@ class NavelGateway:
                         "Direct MQTT password must contain at least 16 characters"
                     )
                 self._direct_clients[mac] = (str(address), password)
+        self._agua_passwords = {
+            str(item["device_mac"]).upper().replace(":", "").replace("-", ""): item[
+                "agua_mqtt_password"
+            ]
+            for item in configured
+            if item.get("agua_mqtt_password")
+        }
         self.guard = EepromGuard(self.stoves, history=history, persist=persist)
         self.device_macs = tuple(self.stoves)
         self.device_mac = self.device_macs[0]
@@ -180,6 +187,7 @@ class NavelGateway:
         self._passwords = {mac: secrets.token_urlsafe(32) for mac in self.stoves}
         self._server = None
         self._sessions = set()
+        self._identities = {}
         self._tasks = set()
         self._writers = set()
         self._listeners = set()
@@ -293,9 +301,21 @@ class NavelGateway:
             and client_id.startswith("navel-user-")
             and hmac.compare_digest(password.encode(), direct[1].encode())
         )
+        agua_mac = username.removeprefix("navel-agua-")
+        agua_client = (
+            address == "127.0.0.1"
+            and client_id.startswith("navel-user-")
+            and agua_mac in self._agua_passwords
+            and username == f"navel-agua-{agua_mac}"
+            and hmac.compare_digest(
+                password.encode(), self._agua_passwords[agua_mac].encode()
+            )
+        )
         if direct_client:
             mac = direct_mac
-        if not stove and not local_client and not direct_client:
+        elif agua_client:
+            mac = agua_mac
+        if not stove and not local_client and not direct_client and not agua_client:
             raise ProtocolError("Connection not authorized")
         # Shared firmware credentials are not a device secret. Stove connections
         # are constrained by their registered IP and client ID instead.
@@ -346,6 +366,9 @@ class NavelGateway:
             if session is not None:
                 self._sessions.discard(session)
                 if session.stove:
+                    identity = self._identities.get(session.device_mac)
+                    if identity and identity[0] is session:
+                        self._identities.pop(session.device_mac, None)
                     self._notify()
             self._writers.discard(writer)
             writer.close()
@@ -361,10 +384,13 @@ class NavelGateway:
         elif header == 0x82:
             identifier = fields.take(2)
             results = bytearray()
+            added = set()
             while fields.pos < len(body):
                 topic = fields.string()
                 qos = fields.take(1)[0]
                 if topic in self.topics_for(session.device_mac) and qos <= 1:
+                    if topic not in session.subscriptions:
+                        added.add(topic)
                     session.subscriptions.add(topic)
                     results.append(0)
                 else:
@@ -372,6 +398,13 @@ class NavelGateway:
             if not results or identifier == b"\x00\x00":
                 raise ProtocolError("Invalid subscription")
             await session.send(0x90, identifier + results)
+            identity = self._identities.get(session.device_mac)
+            if not session.stove and identity:
+                source, topic, payload = identity
+                if topic in added and not source.writer.is_closing():
+                    # A late client needs the current stove session's handshake.
+                    # Never replay readings, writes or data from a closed session.
+                    await session.send(0x30, mqtt_string(topic) + payload)
         elif header == 0xA2:
             identifier = fields.take(2)
             if identifier == b"\x00\x00" or fields.pos == len(body):
@@ -394,6 +427,18 @@ class NavelGateway:
             if identifier == b"\x00\x00":
                 raise ProtocolError("Invalid publish identifier")
             payload = body[fields.pos :]
+            if session.stove:
+                try:
+                    obj = json.loads(payload)
+                    if (
+                        isinstance(obj, dict)
+                        and obj.get("mt") == "C"
+                        and isinstance(obj.get("pl"), dict)
+                        and obj["pl"].get("Cmd", obj["pl"].get("cmd")) == "Identity"
+                    ):
+                        self._identities[session.device_mac] = (session, topic, payload)
+                except (ValueError, TypeError, UnicodeError):
+                    pass
             targets = [
                 target
                 for target in tuple(self._sessions)
@@ -483,7 +528,9 @@ class NavelGateway:
                 "mi": obj["mi"],
                 "mt": "G",
                 "pl": {
-                    "Cmd": "GatewayWriteResult",
+                    "Cmd": "MqttWriteResult"
+                    if session.client_id.startswith("navel-user-")
+                    else "GatewayWriteResult",
                     "Accepted": accepted,
                     "Reason": reason,
                 },

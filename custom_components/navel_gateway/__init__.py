@@ -1,17 +1,20 @@
 """Navel endpoint for direct MQTT clients and optional Agua IOT controls."""
 
 import asyncio
+import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_HOMEASSISTANT_STOP, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady, HomeAssistantError
 
+from .agua import apply_links
 from .broker import NavelGateway
 from .storage import BudgetStore
 
 DOMAIN = "navel_gateway"
 PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -47,6 +50,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await gateway.close()
         hass.data[DOMAIN].pop(entry.entry_id, None)
         raise
+    try:
+        await apply_links(hass, entry, gateway)
+    except asyncio.CancelledError:
+        await gateway.close()
+        hass.data[DOMAIN].pop(entry.entry_id, None)
+        raise
+    except Exception:
+        # Optional client configuration must not take down the stove endpoint.
+        # Do not log account options or endpoint credentials.
+        _LOGGER.warning(
+            "Could not configure the optional Agua IOT connection. Confirm it again in gateway options."
+        )
     return True
 
 

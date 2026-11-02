@@ -20,7 +20,10 @@
       },
       "network": {
         "title": "Fast fertig",
-        "description": "Leite den Hersteller-Hostnamen im DNS auf Home Assistant um, zum Beispiel remote.mcz.it. Das Gateway verändert deinen Router nicht. Für eigene Skripte aktiviere unter Konfigurieren den direkten MQTT-Client. Agua IOT ist optional und bietet fertige Ofensteuerungen. EEPROM-Limits gelten für alle Clients."
+        "description": "Leite den Hersteller-Hostnamen im DNS auf Home Assistant um, zum Beispiel remote.mcz.it. Das Gateway verändert deinen Router nicht. Für eigene Skripte aktiviere unter Konfigurieren den direkten MQTT-Client. Agua IOT ist optional und bietet fertige Ofensteuerungen. EEPROM-Limits gelten für alle Clients.\n\nÜber Agua IOT erkannte Öfen: {count}. Mit deiner Bestätigung hinterlegt das Gateway eine lokale MQTT-Verbindung und stellt das vollständige zugehörige Agua-IOT-Konto auf lokales MQTT um. Andere Einstellungen bleiben erhalten. Ohne Bestätigung wird Agua IOT nicht verändert.",
+        "data": {
+          "connect_agua": "Erkannte Agua-IOT-Öfen verbinden"
+        }
       },
       "manual": {
         "title": "Ofen manuell hinzufügen",
@@ -38,7 +41,8 @@
       "too_many_stoves": "Wähle höchstens 16 Öfen aus.",
       "invalid_mac": "Trage die eindeutige WLAN-MAC-Adresse aus deinem Router ein, 12 Hexadezimalstellen.",
       "invalid_name": "Trage einen Namen ein.",
-      "invalid_password": "Verwende ein Passwort mit mindestens 16 Zeichen."
+      "invalid_password": "Verwende ein Passwort mit mindestens 16 Zeichen.",
+      "agua_unavailable": "Die Agua-IOT-Geräte haben sich geändert oder die MQTT-Konfiguration ist inkompatibel. Richte die Verbindung erneut ein."
     },
     "abort": {
       "single_gateway": "Dein Gateway ist bereits eingerichtet. Über Konfigurieren kannst du weitere Öfen hinzufügen.",
@@ -60,7 +64,10 @@
       },
       "network": {
         "title": "Fast fertig",
-        "description": "Leite den Hersteller-Hostnamen im DNS auf Home Assistant um, zum Beispiel remote.mcz.it. Das Gateway verändert deinen Router nicht. Für eigene Skripte aktiviere unter Konfigurieren den direkten MQTT-Client. Agua IOT ist optional und bietet fertige Ofensteuerungen. EEPROM-Limits gelten für alle Clients."
+        "description": "Leite den Hersteller-Hostnamen im DNS auf Home Assistant um, zum Beispiel remote.mcz.it. Das Gateway verändert deinen Router nicht. Für eigene Skripte aktiviere unter Konfigurieren den direkten MQTT-Client. Agua IOT ist optional und bietet fertige Ofensteuerungen. EEPROM-Limits gelten für alle Clients.\n\nÜber Agua IOT erkannte Öfen: {count}. Mit deiner Bestätigung hinterlegt das Gateway eine lokale MQTT-Verbindung und stellt das vollständige zugehörige Agua-IOT-Konto auf lokales MQTT um. Andere Einstellungen bleiben erhalten. Ohne Bestätigung wird Agua IOT nicht verändert.",
+        "data": {
+          "connect_agua": "Erkannte Agua-IOT-Öfen verbinden"
+        }
       },
       "stoves": {
         "title": "Deine Öfen",
@@ -130,7 +137,8 @@
       "invalid_limits": "Ganze Zahlen verwenden: 1–15 pro Stunde und 1–50 pro Tag. Das Tageslimit muss mindestens so hoch wie das Stundenlimit sein.",
       "invalid_mac": "Trage die eindeutige WLAN-MAC-Adresse aus deinem Router ein, 12 Hexadezimalstellen.",
       "invalid_name": "Trage einen Namen ein.",
-      "invalid_password": "Verwende ein Passwort mit mindestens 16 Zeichen."
+      "invalid_password": "Verwende ein Passwort mit mindestens 16 Zeichen.",
+      "agua_unavailable": "Die Agua-IOT-Geräte haben sich geändert oder die MQTT-Konfiguration ist inkompatibel. Richte die Verbindung erneut ein."
     },
     "abort": {
       "setup_aguaiot_first": "Richte zuerst Agua IOT ein und warte auf die ersten aktuellen Messwerte. Kehre danach hierher zurück. Aktualisiere Agua IOT, wenn die Ofenauswahl leer bleibt.",

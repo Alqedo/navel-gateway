@@ -20,7 +20,10 @@
       },
       "network": {
         "title": "Almost there",
-        "description": "Configure the vendor DNS redirect to Home Assistant, for example remote.mcz.it. The gateway does not change your router. For your own scripts, enable Direct MQTT client in Configure. Agua IOT is optional and provides ready-made stove controls. EEPROM limits apply to all clients."
+        "description": "Configure the vendor DNS redirect to Home Assistant, for example remote.mcz.it. The gateway does not change your router. For your own scripts, enable Direct MQTT client in Configure. Agua IOT is optional and provides ready-made stove controls. EEPROM limits apply to all clients.\n\n{count} stoves can be connected through the installed Agua IOT integration. If you confirm, the gateway saves a local MQTT connection for these stoves and switches their complete Agua IOT account to local MQTT. Other settings are preserved. Leaving this off changes nothing in Agua IOT.",
+        "data": {
+          "connect_agua": "Connect detected Agua IOT stoves"
+        }
       },
       "manual": {
         "title": "Add stove manually",
@@ -38,7 +41,8 @@
       "too_many_stoves": "Select up to 16 stoves.",
       "invalid_mac": "Enter a unique 12-digit Wi-Fi MAC address from your router.",
       "invalid_name": "Enter a name.",
-      "invalid_password": "Use a password with at least 16 characters."
+      "invalid_password": "Use a password with at least 16 characters.",
+      "agua_unavailable": "The Agua IOT devices changed or its MQTT configuration is incompatible. Configure the connection again."
     },
     "abort": {
       "single_gateway": "Your gateway is already set up. Choose Configure to add more stoves.",
@@ -60,7 +64,10 @@
       },
       "network": {
         "title": "Almost there",
-        "description": "Configure the vendor DNS redirect to Home Assistant, for example remote.mcz.it. The gateway does not change your router. For your own scripts, enable Direct MQTT client in Configure. Agua IOT is optional and provides ready-made stove controls. EEPROM limits apply to all clients."
+        "description": "Configure the vendor DNS redirect to Home Assistant, for example remote.mcz.it. The gateway does not change your router. For your own scripts, enable Direct MQTT client in Configure. Agua IOT is optional and provides ready-made stove controls. EEPROM limits apply to all clients.\n\n{count} stoves can be connected through the installed Agua IOT integration. If you confirm, the gateway saves a local MQTT connection for these stoves and switches their complete Agua IOT account to local MQTT. Other settings are preserved. Leaving this off changes nothing in Agua IOT.",
+        "data": {
+          "connect_agua": "Connect detected Agua IOT stoves"
+        }
       },
       "stoves": {
         "title": "Your stoves",
@@ -130,7 +137,8 @@
       "invalid_limits": "Use whole numbers: 1–15 per hour and 1–50 per day. The daily limit must be at least the hourly limit.",
       "invalid_mac": "Enter a unique 12-digit Wi-Fi MAC address from your router.",
       "invalid_name": "Enter a name.",
-      "invalid_password": "Use a password with at least 16 characters."
+      "invalid_password": "Use a password with at least 16 characters.",
+      "agua_unavailable": "The Agua IOT devices changed or its MQTT configuration is incompatible. Configure the connection again."
     },
     "abort": {
       "setup_aguaiot_first": "Set up Agua IOT first and wait for its first successful reading, then return here. Update Agua IOT if no stove is listed.",

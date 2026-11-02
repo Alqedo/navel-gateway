@@ -20,7 +20,10 @@
       },
       "network": {
         "title": "Installatie afronden",
-        "description": "Verwijs de hostnaam van de fabrikant via DNS naar Home Assistant, bijvoorbeeld remote.mcz.it. De gateway wijzigt je router niet. Schakel voor eigen scripts de directe MQTT-client in via Configureren. Agua IOT is optioneel en biedt kachelbediening. EEPROM-limieten gelden voor alle clients."
+        "description": "Verwijs de hostnaam van de fabrikant via DNS naar Home Assistant, bijvoorbeeld remote.mcz.it. De gateway wijzigt je router niet. Schakel voor eigen scripts de directe MQTT-client in via Configureren. Agua IOT is optioneel en biedt kachelbediening. EEPROM-limieten gelden voor alle clients.\n\n{count} kachels kunnen via de geïnstalleerde Agua IOT-integratie worden verbonden. Na bevestiging slaat de gateway een lokale MQTT-verbinding op en schakelt het bijbehorende volledige Agua IOT-account over op lokale MQTT. Andere instellingen blijven behouden. Zonder bevestiging verandert Agua IOT niet.",
+        "data": {
+          "connect_agua": "Gedetecteerde Agua IOT-kachels verbinden"
+        }
       },
       "manual": {
         "title": "Kachel handmatig toevoegen",
@@ -38,7 +41,8 @@
       "too_many_stoves": "Kies maximaal 16 kachels.",
       "invalid_mac": "Voer het unieke wifi-MAC-adres van 12 hexadecimale tekens uit je router in.",
       "invalid_name": "Voer een naam in.",
-      "invalid_password": "Gebruik een wachtwoord van minimaal 16 tekens."
+      "invalid_password": "Gebruik een wachtwoord van minimaal 16 tekens.",
+      "agua_unavailable": "De Agua IOT-apparaten zijn veranderd of de MQTT-configuratie is niet compatibel. Stel de verbinding opnieuw in."
     },
     "abort": {
       "single_gateway": "Je gateway is al ingesteld. Kies Configureren om kachels toe te voegen.",
@@ -60,7 +64,10 @@
       },
       "network": {
         "title": "Installatie afronden",
-        "description": "Verwijs de hostnaam van de fabrikant via DNS naar Home Assistant, bijvoorbeeld remote.mcz.it. De gateway wijzigt je router niet. Schakel voor eigen scripts de directe MQTT-client in via Configureren. Agua IOT is optioneel en biedt kachelbediening. EEPROM-limieten gelden voor alle clients."
+        "description": "Verwijs de hostnaam van de fabrikant via DNS naar Home Assistant, bijvoorbeeld remote.mcz.it. De gateway wijzigt je router niet. Schakel voor eigen scripts de directe MQTT-client in via Configureren. Agua IOT is optioneel en biedt kachelbediening. EEPROM-limieten gelden voor alle clients.\n\n{count} kachels kunnen via de geïnstalleerde Agua IOT-integratie worden verbonden. Na bevestiging slaat de gateway een lokale MQTT-verbinding op en schakelt het bijbehorende volledige Agua IOT-account over op lokale MQTT. Andere instellingen blijven behouden. Zonder bevestiging verandert Agua IOT niet.",
+        "data": {
+          "connect_agua": "Gedetecteerde Agua IOT-kachels verbinden"
+        }
       },
       "stoves": {
         "title": "Je kachels",
@@ -130,7 +137,8 @@
       "invalid_limits": "Gebruik gehele getallen: 1–15 per uur en 1–50 per dag. De daggrens moet minstens zo hoog zijn als de uurgrens.",
       "invalid_mac": "Voer het unieke wifi-MAC-adres van 12 hexadecimale tekens uit je router in.",
       "invalid_name": "Voer een naam in.",
-      "invalid_password": "Gebruik een wachtwoord van minimaal 16 tekens."
+      "invalid_password": "Gebruik een wachtwoord van minimaal 16 tekens.",
+      "agua_unavailable": "De Agua IOT-apparaten zijn veranderd of de MQTT-configuratie is niet compatibel. Stel de verbinding opnieuw in."
     },
     "abort": {
       "setup_aguaiot_first": "Stel eerst Agua IOT in en wacht op een actuele meting. Kom daarna terug.",

@@ -47,6 +47,6 @@ The example requires a connected stove, times out after 30 seconds and never rec
 
 `RequestWriting` must include a non-empty unique `mi`, `mt: Q`, and equally sized `Items`, `Values`, `Masks`, `BitData` and `Endianess` arrays. Use register definitions verified for your model. EEPROM writes share the same persistent per-stove limits as all other clients.
 
-After a write, wait for an `mt: G` message with the same `mi` and `pl.Cmd: GatewayWriteResult`. `pl.Accepted: true` means the gateway forwarded the command, not that the stove executed it. A negative receipt includes `pl.Reason`. A missing receipt means delivery is uncertain. Do not automatically retry a write. An MQTT PUBACK is not a write permission or execution confirmation.
+After a write, wait for an `mt: G` message with the same `mi` and `pl.Cmd: MqttWriteResult`. `pl.Accepted: true` means the gateway forwarded the command, not that the stove executed it. A negative receipt includes `pl.Reason`. A missing receipt means delivery is uncertain. Do not automatically retry a write. An MQTT PUBACK is not a write permission or execution confirmation.
 
 Allowed application messages are Identity, Ping acknowledgements, RequestReading and RequestWriting. Wi-Fi provisioning and arbitrary vendor commands are not supported. There is no retained state, offline queue or replay.

@@ -20,7 +20,10 @@
       },
       "network": {
         "title": "Terminer la configuration",
-        "description": "Redirigez le nom d’hôte du fabricant vers Home Assistant dans le DNS, par exemple remote.mcz.it. La passerelle ne modifie pas votre routeur. Pour vos scripts, activez le client MQTT direct dans Configurer. Agua IOT est facultatif et fournit les commandes du poêle. Les limites EEPROM s’appliquent à tous les clients."
+        "description": "Redirigez le nom d’hôte du fabricant vers Home Assistant dans le DNS, par exemple remote.mcz.it. La passerelle ne modifie pas votre routeur. Pour vos scripts, activez le client MQTT direct dans Configurer. Agua IOT est facultatif et fournit les commandes du poêle. Les limites EEPROM s’appliquent à tous les clients.\n\n{count} poêles peuvent être connectés via Agua IOT installé. Votre confirmation enregistre une connexion MQTT locale et bascule le compte Agua IOT complet correspondant en MQTT local. Les autres réglages sont conservés. Sans confirmation, Agua IOT reste inchangé.",
+        "data": {
+          "connect_agua": "Connecter les poêles Agua IOT détectés"
+        }
       },
       "manual": {
         "title": "Ajouter un poêle manuellement",
@@ -38,7 +41,8 @@
       "too_many_stoves": "Choisissez au maximum 16 poêles.",
       "invalid_mac": "Saisissez une adresse MAC Wi-Fi unique de 12 caractères hexadécimaux indiquée dans votre routeur.",
       "invalid_name": "Saisissez un nom.",
-      "invalid_password": "Utilisez un mot de passe d’au moins 16 caractères."
+      "invalid_password": "Utilisez un mot de passe d’au moins 16 caractères.",
+      "agua_unavailable": "Les appareils Agua IOT ont changé ou la configuration MQTT est incompatible. Configurez à nouveau la connexion."
     },
     "abort": {
       "single_gateway": "La passerelle existe déjà. Utilisez Configurer pour ajouter des poêles.",
@@ -60,7 +64,10 @@
       },
       "network": {
         "title": "Terminer la configuration",
-        "description": "Redirigez le nom d’hôte du fabricant vers Home Assistant dans le DNS, par exemple remote.mcz.it. La passerelle ne modifie pas votre routeur. Pour vos scripts, activez le client MQTT direct dans Configurer. Agua IOT est facultatif et fournit les commandes du poêle. Les limites EEPROM s’appliquent à tous les clients."
+        "description": "Redirigez le nom d’hôte du fabricant vers Home Assistant dans le DNS, par exemple remote.mcz.it. La passerelle ne modifie pas votre routeur. Pour vos scripts, activez le client MQTT direct dans Configurer. Agua IOT est facultatif et fournit les commandes du poêle. Les limites EEPROM s’appliquent à tous les clients.\n\n{count} poêles peuvent être connectés via Agua IOT installé. Votre confirmation enregistre une connexion MQTT locale et bascule le compte Agua IOT complet correspondant en MQTT local. Les autres réglages sont conservés. Sans confirmation, Agua IOT reste inchangé.",
+        "data": {
+          "connect_agua": "Connecter les poêles Agua IOT détectés"
+        }
       },
       "stoves": {
         "title": "Vos poêles",
@@ -130,7 +137,8 @@
       "invalid_limits": "Utilisez des entiers : 1–15 par heure et 1–50 par jour. La limite journalière doit être au moins égale à la limite horaire.",
       "invalid_mac": "Saisissez une adresse MAC Wi-Fi unique de 12 caractères hexadécimaux indiquée dans votre routeur.",
       "invalid_name": "Saisissez un nom.",
-      "invalid_password": "Utilisez un mot de passe d’au moins 16 caractères."
+      "invalid_password": "Utilisez un mot de passe d’au moins 16 caractères.",
+      "agua_unavailable": "Les appareils Agua IOT ont changé ou la configuration MQTT est incompatible. Configurez à nouveau la connexion."
     },
     "abort": {
       "setup_aguaiot_first": "Configurez d’abord Agua IOT et attendez une mesure actuelle. Revenez ensuite ici.",

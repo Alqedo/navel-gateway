@@ -11,6 +11,7 @@ from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from . import DOMAIN
+from .agua import eligible_accounts, prepare_links
 from .safety import DEFAULT_POLICY, policy_for
 
 
@@ -77,7 +78,7 @@ class StoveSetup:
         agua_data = self.hass.data.get("aguaiot", {})
         if not self._editing and (
             not isinstance(agua_data, dict)
-            or agua_data.get("navel_gateway_api_version") != 2
+            or agua_data.get("mqtt_client_config_version") != 1
         ):
             return await self.async_step_manual()
         errors = {}
@@ -231,20 +232,47 @@ class StoveSetup:
         )
 
     async def async_step_network(self, user_input=None):
+        accounts = eligible_accounts(self.hass, self._pending)
+        errors = {}
         if user_input is not None:
-            data = {"stoves": self._pending}
-            if self._editing:
-                self.hass.config_entries.async_update_entry(
-                    self.config_entry, data=data
+            opted_in = user_input.get("connect_agua", False)
+            if opted_in and not accounts:
+                errors["base"] = "agua_unavailable"
+            else:
+                stoves = (
+                    prepare_links(self._pending, accounts)
+                    if opted_in
+                    else self._pending
                 )
-                return self.async_create_entry(
-                    title="", data={"revision": uuid.uuid4().hex}
-                )
-            await self.async_set_unique_id("navel_gateway")
-            self._abort_if_unique_id_configured()
-            return self.async_create_entry(title="Navel Gateway", data=data)
+                data = {"stoves": stoves}
+                if opted_in:
+                    data["agua_link_requests"] = accounts
+                if self._editing:
+                    self.hass.config_entries.async_update_entry(
+                        self.config_entry, data=data
+                    )
+                    return self.async_create_entry(
+                        title="", data={"revision": uuid.uuid4().hex}
+                    )
+                await self.async_set_unique_id("navel_gateway")
+                self._abort_if_unique_id_configured()
+                return self.async_create_entry(title="Navel Gateway", data=data)
         return self.async_show_form(
-            step_id="network", data_schema=vol.Schema({}), last_step=True
+            step_id="network",
+            errors=errors,
+            description_placeholders={
+                "count": str(sum(len(a["devices"]) for a in accounts))
+            },
+            data_schema=vol.Schema(
+                {
+                    vol.Optional(
+                        "connect_agua", default=False
+                    ): selector.BooleanSelector()
+                }
+                if accounts
+                else {}
+            ),
+            last_step=True,
         )
 
 

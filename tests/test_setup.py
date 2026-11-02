@@ -106,7 +106,7 @@ async def test_port_conflict_does_not_change_other_services(monkeypatch):
 async def test_guided_setup_requires_network_confirmation(monkeypatch):
     wizard = flow.NavelGatewayConfigFlow()
     wizard.hass = MagicMock()
-    wizard.hass.data = {"aguaiot": {"navel_gateway_api_version": 2}}
+    wizard.hass.data = {"aguaiot": {"mqtt_client_config_version": 1}}
     wizard.hass.async_add_executor_job = AsyncMock(return_value=True)
     wizard.hass.config_entries.async_entries.return_value = [
         MagicMock(
@@ -140,7 +140,7 @@ async def test_guided_setup_requires_network_confirmation(monkeypatch):
 async def test_setup_without_cached_stove_is_explained(monkeypatch):
     wizard = flow.NavelGatewayConfigFlow()
     wizard.hass = MagicMock()
-    wizard.hass.data = {"aguaiot": {"navel_gateway_api_version": 2}}
+    wizard.hass.data = {"aguaiot": {"mqtt_client_config_version": 1}}
     wizard.hass.config_entries.async_entries.return_value = []
     monkeypatch.setattr(wizard, "_async_current_entries", lambda: [])
     result = await wizard.async_step_user()
@@ -151,7 +151,7 @@ async def test_setup_without_cached_stove_is_explained(monkeypatch):
 async def test_multiple_stove_addresses_are_saved_individually(monkeypatch):
     wizard = flow.NavelGatewayConfigFlow()
     wizard.hass = MagicMock()
-    wizard.hass.data = {"aguaiot": {"navel_gateway_api_version": 2}}
+    wizard.hass.data = {"aguaiot": {"mqtt_client_config_version": 1}}
     wizard.hass.async_add_executor_job = AsyncMock(return_value=True)
     wizard.hass.config_entries.async_entries.return_value = [
         MagicMock(
@@ -182,7 +182,7 @@ async def test_multiple_stove_addresses_are_saved_individually(monkeypatch):
 async def test_options_can_remove_stove_and_preserve_remaining_address(monkeypatch):
     wizard = flow.NavelGatewayOptionsFlow()
     wizard.hass = MagicMock()
-    wizard.hass.data = {"aguaiot": {"navel_gateway_api_version": 2}}
+    wizard.hass.data = {"aguaiot": {"mqtt_client_config_version": 1}}
     entry = MagicMock(
         data={
             "stoves": [
@@ -332,7 +332,7 @@ async def test_cloud_uuid_stove_can_be_bound_to_wifi_mac(monkeypatch):
     identity = "12345678-1234-4234-8234-123456789abc"
     wizard = flow.NavelGatewayConfigFlow()
     wizard.hass = MagicMock()
-    wizard.hass.data = {"aguaiot": {"navel_gateway_api_version": 2}}
+    wizard.hass.data = {"aguaiot": {"mqtt_client_config_version": 1}}
     wizard.hass.async_add_executor_job = AsyncMock(return_value=True)
     wizard.hass.config_entries.async_entries.return_value = [
         MagicMock(
@@ -472,3 +472,60 @@ async def test_direct_client_credentials_kept_private_and_revocable(monkeypatch)
             "stoves"
         ][0]
     )
+
+
+@pytest.mark.asyncio
+async def test_network_confirmation_is_explicit_and_prepares_agua_request(monkeypatch):
+    wizard = flow.NavelGatewayConfigFlow()
+    wizard.hass = MagicMock()
+    wizard.hass.data = {"aguaiot": {"mqtt_client_config_version": 1}}
+    account = MagicMock(
+        entry_id="account",
+        data={
+            "ble_bootstrap_devices": [
+                {"id_device": "cloud-one", "product_serial": "AABBCCDDEEFF"}
+            ]
+        },
+    )
+    wizard.hass.config_entries.async_entries.return_value = [account]
+    wizard._pending = [
+        {"device_mac": "AABBCCDDEEFF", "name": "Stove", "stove_ip": "192.168.1.20"}
+    ]
+    monkeypatch.setattr(wizard, "async_set_unique_id", AsyncMock())
+    monkeypatch.setattr(wizard, "_abort_if_unique_id_configured", MagicMock())
+    shown = await wizard.async_step_network()
+    assert shown["description_placeholders"]["count"] == "1"
+    assert list(shown["data_schema"].schema)[0].default() is False
+    untouched = await wizard.async_step_network({})
+    assert "agua_link_requests" not in untouched["data"]
+    assert "agua_mqtt_password" not in untouched["data"]["stoves"][0]
+    opted = await wizard.async_step_network({"connect_agua": True})
+    assert opted["data"]["agua_link_requests"] == [
+        {
+            "entry_id": "account",
+            "devices": [{"device_id": "cloud-one", "device_mac": "AABBCCDDEEFF"}],
+        }
+    ]
+    assert len(opted["data"]["stoves"][0]["agua_mqtt_password"]) >= 32
+    wizard.hass.config_entries.async_update_entry.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_optional_agua_failure_does_not_stop_gateway(monkeypatch):
+    hass, entry = MagicMock(), MagicMock()
+    hass.data = {}
+    entry.entry_id = "independent"
+    entry.data = {
+        "stoves": [{"stove_ip": "192.168.1.20", "device_mac": "AABBCCDDEEFF"}]
+    }
+    hass.config_entries.async_forward_entry_setups = AsyncMock()
+    endpoint = MagicMock(start=AsyncMock(), close=AsyncMock())
+    monkeypatch.setattr(component, "NavelGateway", MagicMock(return_value=endpoint))
+    monkeypatch.setattr(
+        component,
+        "apply_links",
+        AsyncMock(side_effect=RuntimeError("optional client failed")),
+    )
+    assert await component.async_setup_entry(hass, entry)
+    assert hass.data[component.DOMAIN][entry.entry_id] is endpoint
+    endpoint.close.assert_not_awaited()
