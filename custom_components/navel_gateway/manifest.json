@@ -1,7 +1,9 @@
 {
   "domain": "navel_gateway",
   "name": "Navel Gateway",
-  "codeowners": [],
+  "codeowners": [
+    "@Alqedo"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/alqedo/navel-gateway",
   "integration_type": "hub",

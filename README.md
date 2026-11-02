@@ -1,5 +1,9 @@
 # Navel Gateway
 
+<p align="center"><a href="https://alqedo.com"><img src="custom_components/navel_gateway/brand/icon.png" alt="Navel Gateway by Alqedo" width="320"></a></p>
+
+Built and maintained by **[Alqedo](https://alqedo.com)**.
+
 Local Wi-Fi connectivity for Micronova Navel 2.0 pellet stoves in Home Assistant. One gateway connects up to 16 stoves without a separate Mosquitto installation or manual MQTT credentials.
 
 Navel Gateway provides the connection and per-stove EEPROM write protection. [Agua IOT](https://github.com/vincentwolsink/home_assistant_micronova_agua_iot) provides the stove controls, register maps and entities.
@@ -67,7 +71,11 @@ ruff format --check .
 pytest -q
 ```
 
-Tests use simulated devices and loopback sockets. Icon regeneration additionally requires Pillow. Use Conventional Commit messages such as `fix: preserve stove connection after reload`. Include regression tests for protocol or safety changes; never include credentials, raw Identity messages or HA storage dumps in reports.
+Tests use simulated devices and loopback sockets. Use Conventional Commit messages such as `fix: preserve stove connection after reload`. Include regression tests for protocol or safety changes; never include credentials, raw Identity messages or HA storage dumps in reports.
+
+## Maintainer
+
+Navel Gateway is an open-source project by [Alqedo](https://alqedo.com). Visit our website to learn more about the company. For integration support and bug reports, use [GitHub Issues](https://github.com/Alqedo/navel-gateway/issues).
 
 ## License
 
