@@ -1,0 +1,159 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vos poêles",
+        "description": "Choisissez les poêles à connecter localement. Une seule passerelle peut tous les connecter.",
+        "data": {
+          "devices": "Choisir les poêles",
+          "manual_setup": "Configurer manuellement sans Agua IOT"
+        }
+      },
+      "address": {
+        "title": "Adresse du poêle",
+        "description": "**{stove_name}** · Poêle {position} sur {total}\n\nRetrouvez l’adresse IP dans la liste des appareils du routeur et réservez-la pour ce poêle.",
+        "data": {
+          "stove_ip": "Adresse IP",
+          "device_mac": "Adresse MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Terminer la configuration",
+        "description": "Redirigez le nom d’hôte du fabricant vers Home Assistant dans le DNS, par exemple remote.mcz.it. La passerelle ne modifie pas votre routeur. Pour vos scripts, activez le client MQTT direct dans Configurer. Agua IOT est facultatif et fournit les commandes du poêle. Les limites EEPROM s’appliquent à tous les clients."
+      },
+      "manual": {
+        "title": "Ajouter un poêle manuellement",
+        "data": {
+          "name": "Nom",
+          "stove_ip": "Adresse IP",
+          "device_mac": "Adresse MAC Wi-Fi"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Saisissez une adresse IPv4 privée du réseau local.",
+      "unknown_stove": "Choisissez un poêle disponible dans Agua IOT.",
+      "port_in_use": "Le port 1883 est déjà utilisé. Libérez ce port ou utilisez le serveur existant via l’intégration MQTT. Aucun service n’a été modifié.",
+      "too_many_stoves": "Choisissez au maximum 16 poêles.",
+      "invalid_mac": "Saisissez une adresse MAC Wi-Fi unique de 12 caractères hexadécimaux indiquée dans votre routeur.",
+      "invalid_name": "Saisissez un nom.",
+      "invalid_password": "Utilisez un mot de passe d’au moins 16 caractères."
+    },
+    "abort": {
+      "single_gateway": "La passerelle existe déjà. Utilisez Configurer pour ajouter des poêles.",
+      "setup_aguaiot_first": "Configurez d’abord Agua IOT et attendez une mesure actuelle. Revenez ensuite ici.",
+      "already_configured": "Navel Gateway est déjà configuré.",
+      "update_aguaiot": "Mettez à jour Agua IOT vers une version compatible avec Navel Gateway et redémarrez Home Assistant.",
+      "too_many_stoves": "Choisissez au maximum 16 poêles."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Adresse du poêle",
+        "description": "**{stove_name}** · Poêle {position} sur {total}\n\nRetrouvez l’adresse IP dans la liste des appareils du routeur et réservez-la pour ce poêle.",
+        "data": {
+          "stove_ip": "Adresse IP",
+          "device_mac": "Adresse MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Terminer la configuration",
+        "description": "Redirigez le nom d’hôte du fabricant vers Home Assistant dans le DNS, par exemple remote.mcz.it. La passerelle ne modifie pas votre routeur. Pour vos scripts, activez le client MQTT direct dans Configurer. Agua IOT est facultatif et fournit les commandes du poêle. Les limites EEPROM s’appliquent à tous les clients."
+      },
+      "stoves": {
+        "title": "Vos poêles",
+        "description": "Choisissez les poêles à connecter localement. Une seule passerelle peut tous les connecter.",
+        "data": {
+          "devices": "Choisir les poêles",
+          "manual_setup": "Configurer manuellement sans Agua IOT"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Protection par poêle",
+          "stoves": "Poêles et adresses IP",
+          "manual": "Ajouter un poêle manuellement",
+          "mqtt": "Client MQTT direct"
+        }
+      },
+      "protection": {
+        "title": "Choisir un poêle",
+        "description": "Pour quel poêle souhaitez-vous modifier la protection ?",
+        "data": {
+          "device": "Poêle"
+        }
+      },
+      "safety": {
+        "title": "Protection contre les écritures",
+        "description": "**{stove_name}**\n\nLes réglages permanents, comme les programmes ou les consignes, utilisent l’EEPROM. Des écritures fréquentes peuvent l’user. La lecture et les commandes en RAM restent disponibles.\n\nLimites recommandées : 15 écritures en 60 minutes et 50 en 24 heures. Les compteurs sont conservés après un redémarrage.",
+        "data": {
+          "allow_eeprom_writes": "Autoriser les modifications des réglages enregistrés",
+          "max_eeprom_writes_per_hour": "Maximum en 60 minutes",
+          "max_eeprom_writes_per_day": "Maximum en 24 heures"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Désactivé : les modifications EEPROM sont bloquées pour ce poêle."
+        }
+      },
+      "manual": {
+        "title": "Ajouter un poêle manuellement",
+        "data": {
+          "name": "Nom",
+          "stove_ip": "Adresse IP",
+          "device_mac": "Adresse MAC Wi-Fi"
+        }
+      },
+      "mqtt": {
+        "title": "Client MQTT direct",
+        "data": {
+          "device": "Choisir le poêle"
+        }
+      },
+      "mqtt_client": {
+        "title": "Client MQTT direct",
+        "description": "Pour {stove_name}. Nom d’utilisateur : {username}. L’identifiant client doit commencer par navel-user-. Autorisez uniquement un client de confiance du réseau local. MQTT n’est pas chiffré. Au moins 16 caractères ; laissez vide pour conserver le mot de passe. La désactivation supprime les identifiants.",
+        "data": {
+          "mqtt_client_enabled": "Activer l’accès MQTT direct",
+          "mqtt_client_ip": "Adresse IPv4 du client",
+          "mqtt_client_password": "Mot de passe"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Saisissez une adresse IPv4 privée du réseau local.",
+      "unknown_stove": "Choisissez un poêle disponible dans Agua IOT.",
+      "port_in_use": "Le port 1883 est déjà utilisé. Libérez ce port ou utilisez le serveur existant via l’intégration MQTT. Aucun service n’a été modifié.",
+      "too_many_stoves": "Choisissez au maximum 16 poêles.",
+      "invalid_limits": "Utilisez des entiers : 1–15 par heure et 1–50 par jour. La limite journalière doit être au moins égale à la limite horaire.",
+      "invalid_mac": "Saisissez une adresse MAC Wi-Fi unique de 12 caractères hexadécimaux indiquée dans votre routeur.",
+      "invalid_name": "Saisissez un nom.",
+      "invalid_password": "Utilisez un mot de passe d’au moins 16 caractères."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Configurez d’abord Agua IOT et attendez une mesure actuelle. Revenez ensuite ici.",
+      "too_many_stoves": "Choisissez au maximum 16 poêles."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Connexion du poêle"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "Protection EEPROM",
+        "state": {
+          "ready": "Protégé",
+          "disabled": "Écritures bloquées",
+          "hourly_limit": "Limite horaire atteinte",
+          "daily_limit": "Limite journalière atteinte",
+          "storage_error": "Erreur de stockage"
+        }
+      }
+    }
+  }
+}

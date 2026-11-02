@@ -1,0 +1,159 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Je kachels",
+        "description": "Kies de kachels die je lokaal wilt verbinden. Eén gateway verbindt alle geselecteerde kachels.",
+        "data": {
+          "devices": "Kachels kiezen",
+          "manual_setup": "Handmatig instellen zonder Agua IOT"
+        }
+      },
+      "address": {
+        "title": "Adres van de kachel",
+        "description": "**{stove_name}** · Kachel {position} van {total}\n\nZoek het IP-adres in de apparatenlijst van je router en reserveer het voor deze kachel.",
+        "data": {
+          "stove_ip": "IP-adres",
+          "device_mac": "Wifi-MAC-adres"
+        }
+      },
+      "network": {
+        "title": "Installatie afronden",
+        "description": "Verwijs de hostnaam van de fabrikant via DNS naar Home Assistant, bijvoorbeeld remote.mcz.it. De gateway wijzigt je router niet. Schakel voor eigen scripts de directe MQTT-client in via Configureren. Agua IOT is optioneel en biedt kachelbediening. EEPROM-limieten gelden voor alle clients."
+      },
+      "manual": {
+        "title": "Kachel handmatig toevoegen",
+        "data": {
+          "name": "Naam",
+          "stove_ip": "IP-adres",
+          "device_mac": "Wifi-MAC-adres"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Voer een privé-IPv4-adres van de kachel in.",
+      "unknown_stove": "Kies een kachel uit Agua IOT.",
+      "port_in_use": "Poort 1883 is al in gebruik. Maak de poort vrij of gebruik de bestaande server via de MQTT-integratie. Er is geen dienst gewijzigd.",
+      "too_many_stoves": "Kies maximaal 16 kachels.",
+      "invalid_mac": "Voer het unieke wifi-MAC-adres van 12 hexadecimale tekens uit je router in.",
+      "invalid_name": "Voer een naam in.",
+      "invalid_password": "Gebruik een wachtwoord van minimaal 16 tekens."
+    },
+    "abort": {
+      "single_gateway": "Je gateway is al ingesteld. Kies Configureren om kachels toe te voegen.",
+      "setup_aguaiot_first": "Stel eerst Agua IOT in en wacht op een actuele meting. Kom daarna terug.",
+      "already_configured": "Navel Gateway is al ingesteld.",
+      "update_aguaiot": "Werk Agua IOT bij naar een versie met Navel Gateway-ondersteuning en herstart Home Assistant.",
+      "too_many_stoves": "Kies maximaal 16 kachels."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Adres van de kachel",
+        "description": "**{stove_name}** · Kachel {position} van {total}\n\nZoek het IP-adres in de apparatenlijst van je router en reserveer het voor deze kachel.",
+        "data": {
+          "stove_ip": "IP-adres",
+          "device_mac": "Wifi-MAC-adres"
+        }
+      },
+      "network": {
+        "title": "Installatie afronden",
+        "description": "Verwijs de hostnaam van de fabrikant via DNS naar Home Assistant, bijvoorbeeld remote.mcz.it. De gateway wijzigt je router niet. Schakel voor eigen scripts de directe MQTT-client in via Configureren. Agua IOT is optioneel en biedt kachelbediening. EEPROM-limieten gelden voor alle clients."
+      },
+      "stoves": {
+        "title": "Je kachels",
+        "description": "Kies de kachels die je lokaal wilt verbinden. Eén gateway verbindt alle geselecteerde kachels.",
+        "data": {
+          "devices": "Kachels kiezen",
+          "manual_setup": "Handmatig instellen zonder Agua IOT"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Schrijfbeveiliging per kachel",
+          "stoves": "Kachels en IP-adressen",
+          "manual": "Kachel handmatig toevoegen",
+          "mqtt": "Directe MQTT-client"
+        }
+      },
+      "protection": {
+        "title": "Kachel kiezen",
+        "description": "Voor welke kachel wil je de schrijfbeveiliging wijzigen?",
+        "data": {
+          "device": "Kachel"
+        }
+      },
+      "safety": {
+        "title": "Schrijfbeveiliging",
+        "description": "**{stove_name}**\n\nPermanent opgeslagen instellingen, zoals tijdprogramma’s of gewenste temperaturen, gebruiken EEPROM. Vaak schrijven kan slijtage veroorzaken. Uitlezen en RAM-bediening blijven beschikbaar.\n\nAanbevolen: maximaal 15 schrijfopdrachten in 60 minuten en 50 in 24 uur. Tellers blijven na een herstart behouden.",
+        "data": {
+          "allow_eeprom_writes": "Opgeslagen instellingen wijzigen",
+          "max_eeprom_writes_per_hour": "Maximum in 60 minuten",
+          "max_eeprom_writes_per_day": "Maximum in 24 uur"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Uit: wijzigingen in EEPROM worden voor deze kachel geblokkeerd."
+        }
+      },
+      "manual": {
+        "title": "Kachel handmatig toevoegen",
+        "data": {
+          "name": "Naam",
+          "stove_ip": "IP-adres",
+          "device_mac": "Wifi-MAC-adres"
+        }
+      },
+      "mqtt": {
+        "title": "Directe MQTT-client",
+        "data": {
+          "device": "Kachel kiezen"
+        }
+      },
+      "mqtt_client": {
+        "title": "Directe MQTT-client",
+        "description": "Voor {stove_name}. Gebruikersnaam: {username}. De client-ID moet beginnen met navel-user-. Sta alleen een vertrouwde client op het lokale netwerk toe. MQTT is niet versleuteld. Minimaal 16 tekens; laat leeg om het wachtwoord te behouden. Uitschakelen verwijdert de inloggegevens.",
+        "data": {
+          "mqtt_client_enabled": "Directe MQTT-toegang inschakelen",
+          "mqtt_client_ip": "IPv4-adres van de client",
+          "mqtt_client_password": "Wachtwoord"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Voer een privé-IPv4-adres van de kachel in.",
+      "unknown_stove": "Kies een kachel uit Agua IOT.",
+      "port_in_use": "Poort 1883 is al in gebruik. Maak de poort vrij of gebruik de bestaande server via de MQTT-integratie. Er is geen dienst gewijzigd.",
+      "too_many_stoves": "Kies maximaal 16 kachels.",
+      "invalid_limits": "Gebruik gehele getallen: 1–15 per uur en 1–50 per dag. De daggrens moet minstens zo hoog zijn als de uurgrens.",
+      "invalid_mac": "Voer het unieke wifi-MAC-adres van 12 hexadecimale tekens uit je router in.",
+      "invalid_name": "Voer een naam in.",
+      "invalid_password": "Gebruik een wachtwoord van minimaal 16 tekens."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Stel eerst Agua IOT in en wacht op een actuele meting. Kom daarna terug.",
+      "too_many_stoves": "Kies maximaal 16 kachels."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Kachelverbinding"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "EEPROM-schrijfbeveiliging",
+        "state": {
+          "ready": "Beveiligd",
+          "disabled": "Schrijven geblokkeerd",
+          "hourly_limit": "Uurgrens bereikt",
+          "daily_limit": "Daggrens bereikt",
+          "storage_error": "Opslagfout"
+        }
+      }
+    }
+  }
+}

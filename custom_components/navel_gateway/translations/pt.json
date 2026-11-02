@@ -1,0 +1,159 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "As suas salamandras",
+        "description": "Escolha as salamandras a ligar localmente. Um único gateway liga todas as salamandras selecionadas.",
+        "data": {
+          "devices": "Escolher salamandras",
+          "manual_setup": "Configurar manualmente sem Agua IOT"
+        }
+      },
+      "address": {
+        "title": "Endereço da salamandra",
+        "description": "**{stove_name}** · Salamandra {position} de {total}\n\nEncontre o endereço IP na lista de dispositivos do router e reserve-o para esta salamandra.",
+        "data": {
+          "stove_ip": "Endereço IP",
+          "device_mac": "Endereço MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Concluir configuração",
+        "description": "Redirecione o nome do servidor do fabricante para o Home Assistant no DNS, por exemplo remote.mcz.it. O gateway não altera o router. Para scripts próprios, ative o cliente MQTT direto em Configurar. O Agua IOT é opcional e fornece controlos da salamandra. Os limites EEPROM aplicam-se a todos os clientes."
+      },
+      "manual": {
+        "title": "Adicionar salamandra manualmente",
+        "data": {
+          "name": "Nome",
+          "stove_ip": "Endereço IP",
+          "device_mac": "Endereço MAC Wi-Fi"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Introduza um endereço IPv4 privado da salamandra.",
+      "unknown_stove": "Escolha uma salamandra do Agua IOT.",
+      "port_in_use": "A porta 1883 já está ocupada. Liberte a porta ou utilize o servidor existente através da integração MQTT. Nenhum serviço foi alterado.",
+      "too_many_stoves": "Selecione no máximo 16 salamandras.",
+      "invalid_mac": "Introduza o endereço MAC Wi-Fi único de 12 caracteres hexadecimais indicado no router.",
+      "invalid_name": "Introduza um nome.",
+      "invalid_password": "Utilize uma palavra-passe com pelo menos 16 caracteres."
+    },
+    "abort": {
+      "single_gateway": "O gateway já está configurado. Escolha Configurar para adicionar salamandras.",
+      "setup_aguaiot_first": "Configure primeiro o Agua IOT e aguarde uma leitura atual. Depois, volte aqui.",
+      "already_configured": "O Navel Gateway já está configurado.",
+      "update_aguaiot": "Atualize o Agua IOT para uma versão compatível com o Navel Gateway e reinicie o Home Assistant.",
+      "too_many_stoves": "Selecione no máximo 16 salamandras."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Endereço da salamandra",
+        "description": "**{stove_name}** · Salamandra {position} de {total}\n\nEncontre o endereço IP na lista de dispositivos do router e reserve-o para esta salamandra.",
+        "data": {
+          "stove_ip": "Endereço IP",
+          "device_mac": "Endereço MAC Wi-Fi"
+        }
+      },
+      "network": {
+        "title": "Concluir configuração",
+        "description": "Redirecione o nome do servidor do fabricante para o Home Assistant no DNS, por exemplo remote.mcz.it. O gateway não altera o router. Para scripts próprios, ative o cliente MQTT direto em Configurar. O Agua IOT é opcional e fornece controlos da salamandra. Os limites EEPROM aplicam-se a todos os clientes."
+      },
+      "stoves": {
+        "title": "As suas salamandras",
+        "description": "Escolha as salamandras a ligar localmente. Um único gateway liga todas as salamandras selecionadas.",
+        "data": {
+          "devices": "Escolher salamandras",
+          "manual_setup": "Configurar manualmente sem Agua IOT"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Proteção por salamandra",
+          "stoves": "Salamandras e endereços IP",
+          "manual": "Adicionar salamandra manualmente",
+          "mqtt": "Cliente MQTT direto"
+        }
+      },
+      "protection": {
+        "title": "Escolher salamandra",
+        "description": "Para que salamandra pretende alterar a proteção?",
+        "data": {
+          "device": "Salamandra"
+        }
+      },
+      "safety": {
+        "title": "Proteção contra escrita",
+        "description": "**{stove_name}**\n\nAs definições permanentes, como programas horários ou temperaturas pretendidas, utilizam EEPROM. Escritas frequentes podem causar desgaste. A leitura e o controlo em RAM continuam disponíveis.\n\nRecomendado: no máximo 15 escritas em 60 minutos e 50 em 24 horas. Os contadores são mantidos após reiniciar.",
+        "data": {
+          "allow_eeprom_writes": "Permitir alterações às definições guardadas",
+          "max_eeprom_writes_per_hour": "Máximo em 60 minutos",
+          "max_eeprom_writes_per_day": "Máximo em 24 horas"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Desativado: as alterações à EEPROM ficam bloqueadas nesta salamandra."
+        }
+      },
+      "manual": {
+        "title": "Adicionar salamandra manualmente",
+        "data": {
+          "name": "Nome",
+          "stove_ip": "Endereço IP",
+          "device_mac": "Endereço MAC Wi-Fi"
+        }
+      },
+      "mqtt": {
+        "title": "Cliente MQTT direto",
+        "data": {
+          "device": "Selecionar salamandra"
+        }
+      },
+      "mqtt_client": {
+        "title": "Cliente MQTT direto",
+        "description": "Para {stove_name}. Utilizador: {username}. O ID do cliente deve começar por navel-user-. Autorize apenas um cliente de confiança na rede local. O MQTT não é encriptado. Pelo menos 16 caracteres; deixe em branco para manter a palavra-passe. Desativar remove as credenciais.",
+        "data": {
+          "mqtt_client_enabled": "Ativar acesso MQTT direto",
+          "mqtt_client_ip": "Endereço IPv4 do cliente",
+          "mqtt_client_password": "Palavra-passe"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Introduza um endereço IPv4 privado da salamandra.",
+      "unknown_stove": "Escolha uma salamandra do Agua IOT.",
+      "port_in_use": "A porta 1883 já está ocupada. Liberte a porta ou utilize o servidor existente através da integração MQTT. Nenhum serviço foi alterado.",
+      "too_many_stoves": "Selecione no máximo 16 salamandras.",
+      "invalid_limits": "Utilize números inteiros: 1–15 por hora e 1–50 por dia. O limite diário deve ser igual ou superior ao limite horário.",
+      "invalid_mac": "Introduza o endereço MAC Wi-Fi único de 12 caracteres hexadecimais indicado no router.",
+      "invalid_name": "Introduza um nome.",
+      "invalid_password": "Utilize uma palavra-passe com pelo menos 16 caracteres."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Configure primeiro o Agua IOT e aguarde uma leitura atual. Depois, volte aqui.",
+      "too_many_stoves": "Selecione no máximo 16 salamandras."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Ligação da salamandra"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "Proteção EEPROM",
+        "state": {
+          "ready": "Protegido",
+          "disabled": "Escrita bloqueada",
+          "hourly_limit": "Limite horário atingido",
+          "daily_limit": "Limite diário atingido",
+          "storage_error": "Erro de armazenamento"
+        }
+      }
+    }
+  }
+}

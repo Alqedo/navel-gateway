@@ -1,0 +1,159 @@
+{
+  "title": "Navel Gateway",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Deine Öfen",
+        "description": "Welche Öfen möchtest du lokal verbinden? Ein Gateway verbindet alle ausgewählten Öfen.",
+        "data": {
+          "devices": "Öfen auswählen",
+          "manual_setup": "Manuell ohne Agua IOT einrichten"
+        }
+      },
+      "address": {
+        "title": "Adresse des Ofens",
+        "description": "**{stove_name}** · Ofen {position} von {total}\n\nDie IP-Adresse findest du in der Geräteliste deines Routers. Reserviere sie dort für diesen Ofen.",
+        "data": {
+          "stove_ip": "IP-Adresse",
+          "device_mac": "WLAN-MAC-Adresse"
+        }
+      },
+      "network": {
+        "title": "Fast fertig",
+        "description": "Leite den Hersteller-Hostnamen im DNS auf Home Assistant um, zum Beispiel remote.mcz.it. Das Gateway verändert deinen Router nicht. Für eigene Skripte aktiviere unter Konfigurieren den direkten MQTT-Client. Agua IOT ist optional und bietet fertige Ofensteuerungen. EEPROM-Limits gelten für alle Clients."
+      },
+      "manual": {
+        "title": "Ofen manuell hinzufügen",
+        "data": {
+          "name": "Name",
+          "stove_ip": "IP-Adresse",
+          "device_mac": "WLAN-MAC-Adresse"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Trage die private IPv4-Adresse des Ofens im Heimnetz ein.",
+      "unknown_stove": "Wähle einen Ofen aus Agua IOT.",
+      "port_in_use": "Port 1883 ist bereits belegt. Beende den betreffenden Dienst selbst oder verwende den vorhandenen Broker über Home Assistant MQTT. Es wurde kein Dienst verändert.",
+      "too_many_stoves": "Wähle höchstens 16 Öfen aus.",
+      "invalid_mac": "Trage die eindeutige WLAN-MAC-Adresse aus deinem Router ein, 12 Hexadezimalstellen.",
+      "invalid_name": "Trage einen Namen ein.",
+      "invalid_password": "Verwende ein Passwort mit mindestens 16 Zeichen."
+    },
+    "abort": {
+      "single_gateway": "Dein Gateway ist bereits eingerichtet. Über Konfigurieren kannst du weitere Öfen hinzufügen.",
+      "setup_aguaiot_first": "Richte zuerst Agua IOT ein und warte auf die ersten aktuellen Messwerte. Kehre danach hierher zurück. Aktualisiere Agua IOT, wenn die Ofenauswahl leer bleibt.",
+      "already_configured": "Navel Gateway ist bereits eingerichtet.",
+      "update_aguaiot": "Aktualisiere zuerst Agua IOT auf eine Version mit Navel-Gateway-Unterstützung und starte Home Assistant neu.",
+      "too_many_stoves": "Wähle höchstens 16 Öfen aus."
+    }
+  },
+  "options": {
+    "step": {
+      "address": {
+        "title": "Adresse des Ofens",
+        "description": "**{stove_name}** · Ofen {position} von {total}\n\nDie IP-Adresse findest du in der Geräteliste deines Routers. Reserviere sie dort für diesen Ofen.",
+        "data": {
+          "stove_ip": "IP-Adresse",
+          "device_mac": "WLAN-MAC-Adresse"
+        }
+      },
+      "network": {
+        "title": "Fast fertig",
+        "description": "Leite den Hersteller-Hostnamen im DNS auf Home Assistant um, zum Beispiel remote.mcz.it. Das Gateway verändert deinen Router nicht. Für eigene Skripte aktiviere unter Konfigurieren den direkten MQTT-Client. Agua IOT ist optional und bietet fertige Ofensteuerungen. EEPROM-Limits gelten für alle Clients."
+      },
+      "stoves": {
+        "title": "Deine Öfen",
+        "description": "Welche Öfen möchtest du lokal verbinden? Ein Gateway verbindet alle ausgewählten Öfen.",
+        "data": {
+          "devices": "Öfen auswählen",
+          "manual_setup": "Manuell ohne Agua IOT einrichten"
+        }
+      },
+      "init": {
+        "title": "Navel Gateway",
+        "menu_options": {
+          "protection": "Schreibschutz pro Ofen",
+          "stoves": "Öfen und IP-Adressen",
+          "manual": "Ofen manuell hinzufügen",
+          "mqtt": "Direkter MQTT-Client"
+        }
+      },
+      "protection": {
+        "title": "Ofen auswählen",
+        "description": "Für welchen Ofen möchtest du den Schreibschutz ändern?",
+        "data": {
+          "device": "Ofen"
+        }
+      },
+      "safety": {
+        "title": "Schreibschutz",
+        "description": "**{stove_name}**\n\nDauerhaft gespeicherte Einstellungen, etwa Zeitprogramme oder Sollwerte, nutzen den EEPROM-Speicher. Häufiges Schreiben kann ihn verschleißen. Lesen und RAM-Steuerung bleiben möglich.\n\nEmpfohlen: höchstens 15 Schreibvorgänge in 60 Minuten und 50 in 24 Stunden. Die Zähler bleiben nach einem Neustart erhalten.",
+        "data": {
+          "allow_eeprom_writes": "Gespeicherte Einstellungen ändern",
+          "max_eeprom_writes_per_hour": "Maximal in 60 Minuten",
+          "max_eeprom_writes_per_day": "Maximal in 24 Stunden"
+        },
+        "data_description": {
+          "allow_eeprom_writes": "Aus: Änderungen im EEPROM werden für diesen Ofen gesperrt."
+        }
+      },
+      "manual": {
+        "title": "Ofen manuell hinzufügen",
+        "data": {
+          "name": "Name",
+          "stove_ip": "IP-Adresse",
+          "device_mac": "WLAN-MAC-Adresse"
+        }
+      },
+      "mqtt": {
+        "title": "Direkter MQTT-Client",
+        "data": {
+          "device": "Ofen auswählen"
+        }
+      },
+      "mqtt_client": {
+        "title": "Direkter MQTT-Client",
+        "description": "Für {stove_name}. Benutzername: {username}. Die Client-ID muss mit navel-user- beginnen. Erlaube nur einen vertrauenswürdigen Client im Heimnetz. MQTT ist unverschlüsselt. Mindestens 16 Zeichen; leer lassen, um das Passwort beizubehalten. Deaktivieren entfernt die Zugangsdaten.",
+        "data": {
+          "mqtt_client_enabled": "Direkten MQTT-Zugang aktivieren",
+          "mqtt_client_ip": "IPv4-Adresse des Clients",
+          "mqtt_client_password": "Passwort"
+        }
+      }
+    },
+    "error": {
+      "invalid_ip": "Trage die private IPv4-Adresse des Ofens im Heimnetz ein.",
+      "unknown_stove": "Wähle einen Ofen aus Agua IOT.",
+      "port_in_use": "Port 1883 ist bereits belegt. Beende den betreffenden Dienst selbst oder verwende den vorhandenen Broker über Home Assistant MQTT. Es wurde kein Dienst verändert.",
+      "too_many_stoves": "Wähle höchstens 16 Öfen aus.",
+      "invalid_limits": "Ganze Zahlen verwenden: 1–15 pro Stunde und 1–50 pro Tag. Das Tageslimit muss mindestens so hoch wie das Stundenlimit sein.",
+      "invalid_mac": "Trage die eindeutige WLAN-MAC-Adresse aus deinem Router ein, 12 Hexadezimalstellen.",
+      "invalid_name": "Trage einen Namen ein.",
+      "invalid_password": "Verwende ein Passwort mit mindestens 16 Zeichen."
+    },
+    "abort": {
+      "setup_aguaiot_first": "Richte zuerst Agua IOT ein und warte auf die ersten aktuellen Messwerte. Kehre danach hierher zurück. Aktualisiere Agua IOT, wenn die Ofenauswahl leer bleibt.",
+      "too_many_stoves": "Wähle höchstens 16 Öfen aus."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "connection": {
+        "name": "Ofenverbindung"
+      }
+    },
+    "sensor": {
+      "eeprom_protection": {
+        "name": "EEPROM-Schreibschutz",
+        "state": {
+          "ready": "Geschützt",
+          "disabled": "Schreiben gesperrt",
+          "hourly_limit": "Stundenlimit erreicht",
+          "daily_limit": "Tageslimit erreicht",
+          "storage_error": "Speicherfehler"
+        }
+      }
+    }
+  }
+}
